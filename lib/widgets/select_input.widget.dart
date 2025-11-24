@@ -1,0 +1,34 @@
+import 'package:flutter/material.dart';
+
+class SelectInput extends StatelessWidget {
+  final String label;
+  final List<String> options;
+  final String? value;
+  final ValueChanged<String?> onChanged;
+
+  const SelectInput({
+    super.key,
+    required this.label,
+    required this.options,
+    required this.value,
+    required this.onChanged,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 250,
+      child: DropdownButtonFormField<String>(
+        initialValue: value,
+        decoration: InputDecoration(
+          labelText: label,
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+        ),
+        items: options
+            .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+            .toList(),
+        onChanged: onChanged,
+      ),
+    );
+  }
+}
