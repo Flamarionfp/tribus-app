@@ -5,6 +5,7 @@ class SelectInput extends StatelessWidget {
   final List<String> options;
   final String? value;
   final ValueChanged<String?> onChanged;
+  final String? Function(String?)? validator;
 
   const SelectInput({
     super.key,
@@ -12,6 +13,7 @@ class SelectInput extends StatelessWidget {
     required this.options,
     required this.value,
     required this.onChanged,
+    this.validator,
   });
 
   @override
@@ -20,6 +22,7 @@ class SelectInput extends StatelessWidget {
       width: 250,
       child: DropdownButtonFormField<String>(
         initialValue: value,
+        validator: validator,
         decoration: InputDecoration(
           labelText: label,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
