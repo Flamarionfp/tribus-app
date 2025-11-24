@@ -30,20 +30,40 @@ class PhotoPickerBox extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            fileImage != null
-                ? ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Image.file(
-                      fileImage!,
-                      height: 90,
-                      width: 90,
-                      fit: BoxFit.cover,
-                    ),
-                  )
-                : Image.asset(imagePath, height: 70).animate().rotate(
-                    duration: 1.5.seconds,
-                    curve: Curves.fastOutSlowIn,
-                  ),
+            AnimatedSwitcher(
+              duration: 600.ms,
+              switchInCurve: Curves.easeOutCubic,
+              switchOutCurve: Curves.easeInCubic,
+
+              child: fileImage != null
+                  ? ClipRRect(
+                          key: const ValueKey("image-picked"),
+                          borderRadius: BorderRadius.circular(8),
+                          child: Image.file(
+                            fileImage!,
+                            height: 90,
+                            width: 90,
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                        .animate()
+                        .fade(duration: 350.ms)
+                        .scale(
+                          begin: const Offset(0.85, 0.85),
+                          duration: 350.ms,
+                        )
+                  : Image.asset(
+                          imagePath,
+                          key: const ValueKey("image-placeholder"),
+                          height: 70,
+                        )
+                        .animate()
+                        .rotate(
+                          duration: 1.5.seconds,
+                          curve: Curves.fastOutSlowIn,
+                        )
+                        .fade(duration: 400.ms),
+            ),
 
             const SizedBox(height: 8),
 
