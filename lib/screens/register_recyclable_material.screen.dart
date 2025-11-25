@@ -183,7 +183,7 @@ class _RegisterRecyclableMaterialScreenState
                   .fade(duration: 500.ms)
                   .slideY(begin: 0.08, duration: 500.ms),
 
-              const SizedBox(height: 12),
+              const SizedBox(height: 24),
 
               TextInput(
                     label: "Descrição",
