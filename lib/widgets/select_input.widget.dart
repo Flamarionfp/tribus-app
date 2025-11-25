@@ -18,16 +18,19 @@ class SelectInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final uniqueOptions = options.toSet().toList();
+
     return SizedBox(
       width: 250,
       child: DropdownButtonFormField<String>(
-        initialValue: value,
+        value: value,
+        hint: const Text("Selecione"), // placeholder quando value == null
         validator: validator,
         decoration: InputDecoration(
           labelText: label,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
         ),
-        items: options
+        items: uniqueOptions
             .map((e) => DropdownMenuItem(value: e, child: Text(e)))
             .toList(),
         onChanged: onChanged,
