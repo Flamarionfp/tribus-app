@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:tribus/widgets/button.widget.dart';
 import 'package:tribus/widgets/photo_picker.widget.dart';
+import 'package:tribus/widgets/photo_source_sheet.widget.dart';
 import 'package:tribus/widgets/select_input.widget.dart';
 import 'package:tribus/widgets/text_input.widget.dart';
 import 'package:image_picker/image_picker.dart';
@@ -78,13 +79,13 @@ class _RegisterRecyclableMaterialScreenState
     setState(() => _loadingPrediction = false);
   }
 
-  Future<void> pickImage() async {
+  Future<void> pickImageFrom(ImageSource source) async {
     if (_picking) return;
     _picking = true;
 
     try {
       final picker = ImagePicker();
-      final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+      final XFile? image = await picker.pickImage(source: source);
 
       if (image != null) {
         final file = File(image.path);
@@ -96,6 +97,23 @@ class _RegisterRecyclableMaterialScreenState
     } finally {
       _picking = false;
     }
+  }
+
+  void showPhotoSourceSheet() {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (_) => PhotoSourceSheet(
+        onCamera: () async {
+          Navigator.pop(context);
+          await pickImageFrom(ImageSource.camera);
+        },
+        onGallery: () async {
+          Navigator.pop(context);
+          await pickImageFrom(ImageSource.gallery);
+        },
+      ),
+    );
   }
 
   void submit() async {
@@ -149,7 +167,7 @@ class _RegisterRecyclableMaterialScreenState
                     title: _loadingPrediction
                         ? "Analisando..."
                         : "Adicionar Foto",
-                    onTap: pickImage,
+                    onTap: showPhotoSourceSheet,
                   )
                   .animate()
                   .fade(duration: 500.ms, curve: Curves.easeOut)
