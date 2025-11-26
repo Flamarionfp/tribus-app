@@ -130,6 +130,10 @@ class _RegisterRecyclableMaterialScreenState
     print("Categoria (ID): $selectedCategory");
     print("Descrição: ${descriptionController.text}");
     print("Imagem: ${selectedImage!.path}");
+
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text("Implementação em breve!")));
   }
 
   @override
@@ -219,7 +223,7 @@ class _RegisterRecyclableMaterialScreenState
 
               const SizedBox(height: 20),
 
-              Button(title: "Cadastrar Material", onPressed: submit)
+              Button(title: "Cadastrar", onPressed: submit)
                   .animate(delay: 350.ms)
                   .fade(duration: 500.ms, curve: Curves.easeOut)
                   .slideY(begin: 0.1, duration: 500.ms, curve: Curves.easeOut)

@@ -24,14 +24,22 @@ class SelectInput extends StatelessWidget {
       width: 250,
       child: DropdownButtonFormField<String>(
         value: value,
-        hint: const Text("Selecione"), // placeholder quando value == null
+        hint: const Text("Selecione"),
         validator: validator,
         decoration: InputDecoration(
           labelText: label,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
         ),
         items: uniqueOptions
-            .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+            .map(
+              (e) => DropdownMenuItem<String>(
+                value: e,
+                child: SizedBox(
+                  width: 200,
+                  child: Text(e, overflow: TextOverflow.ellipsis, maxLines: 1),
+                ),
+              ),
+            )
             .toList(),
         onChanged: onChanged,
       ),
